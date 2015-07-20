@@ -1,0 +1,166 @@
+﻿@model MVC5BoostrapDRAdminV4.TBL_EmployeeDetails
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee Details</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmpID)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BloodGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BloodGroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamLeaderID)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.TeamLeaderID)*@
+            @ViewBag.TLName
+           
+
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftPartnerID)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.ShiftPartnerID)*@
+            @ViewBag.ShiftPartnerName
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBL_Department.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBL_Department.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBL_Gender.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBL_Gender.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TBL_OfficeLocation.OfficeLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TBL_OfficeLocation.OfficeLocation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmpID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,217 @@
+﻿@model MVC5BoostrapDRAdminV4.TBL_EmployeeDetails
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Employee Details</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.EmpID)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GenderID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("GenderID", "Select Gender")
+                @Html.ValidationMessageFor(model => model.GenderID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Designation, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Designation)
+                @Html.ValidationMessageFor(model => model.Designation)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DepartmentID", "Select Department")
+                @Html.ValidationMessageFor(model => model.DepartmentID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactNum, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContactNum)
+                @Html.ValidationMessageFor(model => model.ContactNum)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.City)
+                @Html.ValidationMessageFor(model => model.City)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOB, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class='input-group datePicker' id='datetimepicker1'>
+                    <input name="DOB" id="startDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                </div>
+                @*@Html.EditorFor(model => model.DOB)*@
+                @Html.ValidationMessageFor(model => model.DOB)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOA, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class='input-group datePicker' id='datetimepicker1'>
+                    <input name="DOA" id="startDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                </div>
+                @*@Html.EditorFor(model => model.DOA)*@
+                @Html.ValidationMessageFor(model => model.DOA)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOJ, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class='input-group datePicker' id='datetimepicker1'>
+                    <input name="DOJ" id="startDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                </div>
+                @*@Html.EditorFor(model => model.DOJ)*@
+                @Html.ValidationMessageFor(model => model.DOJ)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BloodGroup, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BloodGroup)
+                @Html.ValidationMessageFor(model => model.BloodGroup)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Mode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Mode", new List<SelectListItem>
+                   {
+                       new SelectListItem { Text = "Active",Value = "Active" },
+                       new SelectListItem { Text = "Inactive",Value = "Inactive" }
+
+                   })
+
+                @Html.ValidationMessageFor(model => model.Mode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OfficeLocationID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("OfficeLocationID", "Select Office Location")
+                @Html.ValidationMessageFor(model => model.OfficeLocationID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TeamLeaderID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TeamLeaderID", "Select Employee")
+                @Html.ValidationMessageFor(model => model.TeamLeaderID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShiftPartnerID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ShiftPartnerID", "Select Employee")
+                @Html.ValidationMessageFor(model => model.ShiftPartnerID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                
+                <button type="submit" class="btn btn-success">
+                    <i class="glyphicon glyphicon-floppy-disk"> </i>  Save
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(document).ready(function () {
+        if ($('#DOB').val() == '') {
+            $('#DOB').attr('type', 'date');
+        }
+        else {
+            $('#DOB').attr('type', 'text');
+        }
+
+        if ($('#DOA').val() == '') {
+            $('#DOA').attr('type', 'date');
+        }
+        else {
+            $('#DOA').attr('type', 'text');
+        }
+        if ($('#DOJ').val() == '') {
+            $('#DOJ').attr('type', 'date');
+        }
+        else {
+            $('#DOJ').attr('type', 'text');
+        }
+
+
+
+    });
+</script>

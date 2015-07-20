@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="somya_DRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBL-Department">
+          <Key>
+            <PropertyRef Name="DepatmentID" />
+          </Key>
+          <Property Name="DepatmentID" Type="int" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBL-EmployeeDetails">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="ContactNum" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="20" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="DOA" Type="date" />
+          <Property Name="DOJ" Type="date" />
+          <Property Name="BloodGroup" Type="varchar" MaxLength="10" />
+          <Property Name="Mode" Type="varchar" MaxLength="8" />
+          <Property Name="OfficeLocationID" Type="int" />
+          <Property Name="TeamLeaderID" Type="int" />
+          <Property Name="ShiftPartnerID" Type="int" />
+        </EntityType>
+        <EntityType Name="TBL-EmployeeLogin">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpID" Type="int" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
+          <Property Name="LastLoginOn" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBL-Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TBL-OfficeLocation">
+          <Key>
+            <PropertyRef Name="OfficeLocationID" />
+          </Key>
+          <Property Name="OfficeLocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OfficeLocation" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_TBL-EmployeeDetails_TBL-Department">
+          <End Role="TBL-Department" Type="Self.TBL-Department" Multiplicity="0..1" />
+          <End Role="TBL-EmployeeDetails" Type="Self.TBL-EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL-Department">
+              <PropertyRef Name="DepatmentID" />
+            </Principal>
+            <Dependent Role="TBL-EmployeeDetails">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL-EmployeeDetails_TBL-Gender">
+          <End Role="TBL-Gender" Type="Self.TBL-Gender" Multiplicity="1" />
+          <End Role="TBL-EmployeeDetails" Type="Self.TBL-EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL-Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="TBL-EmployeeDetails">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL-EmployeeDetails_TBL-OfficeLocation">
+          <End Role="TBL-OfficeLocation" Type="Self.TBL-OfficeLocation" Multiplicity="0..1" />
+          <End Role="TBL-EmployeeDetails" Type="Self.TBL-EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL-OfficeLocation">
+              <PropertyRef Name="OfficeLocationID" />
+            </Principal>
+            <Dependent Role="TBL-EmployeeDetails">
+              <PropertyRef Name="OfficeLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL-EmployeeLogin_TBL-EmployeeDetails">
+          <End Role="TBL-EmployeeDetails" Type="Self.TBL-EmployeeDetails" Multiplicity="0..1" />
+          <End Role="TBL-EmployeeLogin" Type="Self.TBL-EmployeeLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL-EmployeeDetails">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="TBL-EmployeeLogin">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="USP_admin_TLrelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="USP-admin-TLrelation" />
+        <Function Name="USP_admin_TotalDRFilled" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="USP-admin-TotalDRFilled">
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="USP_EXPORT_JOB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="USP-EXPORT-JOB">
+          <Parameter Name="CallType" Type="varchar" Mode="In" />
+          <Parameter Name="EmpID" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="somya_DRModelStoreContainer">
+          <EntitySet Name="TBL-Department" EntityType="Self.TBL-Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL-EmployeeDetails" EntityType="Self.TBL-EmployeeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL-EmployeeLogin" EntityType="Self.TBL-EmployeeLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL-Gender" EntityType="Self.TBL-Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL-OfficeLocation" EntityType="Self.TBL-OfficeLocation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TBL-EmployeeDetails_TBL-Department" Association="Self.FK_TBL-EmployeeDetails_TBL-Department">
+            <End Role="TBL-Department" EntitySet="TBL-Department" />
+            <End Role="TBL-EmployeeDetails" EntitySet="TBL-EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL-EmployeeDetails_TBL-Gender" Association="Self.FK_TBL-EmployeeDetails_TBL-Gender">
+            <End Role="TBL-Gender" EntitySet="TBL-Gender" />
+            <End Role="TBL-EmployeeDetails" EntitySet="TBL-EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL-EmployeeDetails_TBL-OfficeLocation" Association="Self.FK_TBL-EmployeeDetails_TBL-OfficeLocation">
+            <End Role="TBL-OfficeLocation" EntitySet="TBL-OfficeLocation" />
+            <End Role="TBL-EmployeeDetails" EntitySet="TBL-EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL-EmployeeLogin_TBL-EmployeeDetails" Association="Self.FK_TBL-EmployeeLogin_TBL-EmployeeDetails">
+            <End Role="TBL-EmployeeDetails" EntitySet="TBL-EmployeeDetails" />
+            <End Role="TBL-EmployeeLogin" EntitySet="TBL-EmployeeLogin" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="somya_DRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBL_Department">
+          <Key>
+            <PropertyRef Name="DepatmentID" />
+          </Key>
+          <Property Name="DepatmentID" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_EmployeeDetails" Relationship="Self.FK_TBL_EmployeeDetails_TBL_Department" FromRole="TBL_Department" ToRole="TBL_EmployeeDetails" />
+        </EntityType>
+        <EntityType Name="TBL_EmployeeDetails">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="DOA" Type="DateTime" Precision="0" />
+          <Property Name="DOJ" Type="DateTime" Precision="0" />
+          <Property Name="BloodGroup" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Mode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="OfficeLocationID" Type="Int32" />
+          <Property Name="TeamLeaderID" Type="Int32" />
+          <Property Name="ShiftPartnerID" Type="Int32" />
+          <NavigationProperty Name="TBL_Department" Relationship="Self.FK_TBL_EmployeeDetails_TBL_Department" FromRole="TBL_EmployeeDetails" ToRole="TBL_Department" />
+          <NavigationProperty Name="TBL_Gender" Relationship="Self.FK_TBL_EmployeeDetails_TBL_Gender" FromRole="TBL_EmployeeDetails" ToRole="TBL_Gender" />
+          <NavigationProperty Name="TBL_OfficeLocation" Relationship="Self.FK_TBL_EmployeeDetails_TBL_OfficeLocation" FromRole="TBL_EmployeeDetails" ToRole="TBL_OfficeLocation" />
+          <NavigationProperty Name="TBL_EmployeeLogin" Relationship="Self.FK_TBL_EmployeeLogin_TBL_EmployeeDetails" FromRole="TBL_EmployeeDetails" ToRole="TBL_EmployeeLogin" />
+        </EntityType>
+        <EntityType Name="TBL_EmployeeLogin">
+          <Key>
+            <PropertyRef Name="LoginId" />
+          </Key>
+          <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpID" Type="Int32" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TBL_EmployeeDetails" Relationship="Self.FK_TBL_EmployeeLogin_TBL_EmployeeDetails" FromRole="TBL_EmployeeLogin" ToRole="TBL_EmployeeDetails" />
+        </EntityType>
+        <EntityType Name="TBL_Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_EmployeeDetails" Relationship="Self.FK_TBL_EmployeeDetails_TBL_Gender" FromRole="TBL_Gender" ToRole="TBL_EmployeeDetails" />
+        </EntityType>
+        <EntityType Name="TBL_OfficeLocation">
+          <Key>
+            <PropertyRef Name="OfficeLocationID" />
+          </Key>
+          <Property Name="OfficeLocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OfficeLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_EmployeeDetails" Relationship="Self.FK_TBL_EmployeeDetails_TBL_OfficeLocation" FromRole="TBL_OfficeLocation" ToRole="TBL_EmployeeDetails" />
+        </EntityType>
+        <Association Name="FK_TBL_EmployeeDetails_TBL_Department">
+          <End Role="TBL_Department" Type="Self.TBL_Department" Multiplicity="0..1" />
+          <End Role="TBL_EmployeeDetails" Type="Self.TBL_EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Department">
+              <PropertyRef Name="DepatmentID" />
+            </Principal>
+            <Dependent Role="TBL_EmployeeDetails">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_EmployeeDetails_TBL_Gender">
+          <End Role="TBL_Gender" Type="Self.TBL_Gender" Multiplicity="1" />
+          <End Role="TBL_EmployeeDetails" Type="Self.TBL_EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="TBL_EmployeeDetails">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_EmployeeDetails_TBL_OfficeLocation">
+          <End Role="TBL_OfficeLocation" Type="Self.TBL_OfficeLocation" Multiplicity="0..1" />
+          <End Role="TBL_EmployeeDetails" Type="Self.TBL_EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_OfficeLocation">
+              <PropertyRef Name="OfficeLocationID" />
+            </Principal>
+            <Dependent Role="TBL_EmployeeDetails">
+              <PropertyRef Name="OfficeLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TBL_EmployeeLogin_TBL_EmployeeDetails">
+          <End Role="TBL_EmployeeDetails" Type="Self.TBL_EmployeeDetails" Multiplicity="0..1" />
+          <End Role="TBL_EmployeeLogin" Type="Self.TBL_EmployeeLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_EmployeeDetails">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="TBL_EmployeeLogin">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="somya_DR_DBcontext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_Department" EntityType="Self.TBL_Department" />
+          <EntitySet Name="TBL_EmployeeDetails" EntityType="Self.TBL_EmployeeDetails" />
+          <EntitySet Name="TBL_EmployeeLogin" EntityType="Self.TBL_EmployeeLogin" />
+          <EntitySet Name="TBL_Gender" EntityType="Self.TBL_Gender" />
+          <EntitySet Name="TBL_OfficeLocation" EntityType="Self.TBL_OfficeLocation" />
+          <AssociationSet Name="FK_TBL_EmployeeDetails_TBL_Department" Association="Self.FK_TBL_EmployeeDetails_TBL_Department">
+            <End Role="TBL_Department" EntitySet="TBL_Department" />
+            <End Role="TBL_EmployeeDetails" EntitySet="TBL_EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_EmployeeDetails_TBL_Gender" Association="Self.FK_TBL_EmployeeDetails_TBL_Gender">
+            <End Role="TBL_Gender" EntitySet="TBL_Gender" />
+            <End Role="TBL_EmployeeDetails" EntitySet="TBL_EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_EmployeeDetails_TBL_OfficeLocation" Association="Self.FK_TBL_EmployeeDetails_TBL_OfficeLocation">
+            <End Role="TBL_OfficeLocation" EntitySet="TBL_OfficeLocation" />
+            <End Role="TBL_EmployeeDetails" EntitySet="TBL_EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TBL_EmployeeLogin_TBL_EmployeeDetails" Association="Self.FK_TBL_EmployeeLogin_TBL_EmployeeDetails">
+            <End Role="TBL_EmployeeDetails" EntitySet="TBL_EmployeeDetails" />
+            <End Role="TBL_EmployeeLogin" EntitySet="TBL_EmployeeLogin" />
+          </AssociationSet>
+          <FunctionImport Name="USP_admin_TLrelation" ReturnType="Collection(somya_DRModel.USP_admin_TLrelation_Result)" />
+          <FunctionImport Name="USP_admin_TotalDRFilled" ReturnType="Collection(somya_DRModel.USP_admin_TotalDRFilled_Result)">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="USP_EXPORT_JOB" ReturnType="Collection(somya_DRModel.USP_EXPORT_JOB_Result)">
+            <Parameter Name="CallType" Mode="In" Type="String" />
+            <Parameter Name="EmpID" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="USP_admin_TLrelation_Result">
+          <Property Type="String" Name="EmpName" Nullable="false" MaxLength="103" />
+          <Property Type="String" Name="TeamLeaderName" Nullable="false" MaxLength="103" />
+        </ComplexType>
+        <ComplexType Name="USP_admin_TotalDRFilled_Result">
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="TOTAL_DATES_FILLED" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="USP_EXPORT_JOB_Result">
+          <Property Type="Int32" Name="EmpID" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="JobTime" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TotalTime" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="500" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="somya_DRModelStoreContainer" CdmEntityContainer="somya_DR_DBcontext">
+          <EntitySetMapping Name="TBL_Department">
+            <EntityTypeMapping TypeName="somya_DRModel.TBL_Department">
+              <MappingFragment StoreEntitySet="TBL-Department">
+                <ScalarProperty Name="DepatmentID" ColumnName="DepatmentID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_EmployeeDetails">
+            <EntityTypeMapping TypeName="somya_DRModel.TBL_EmployeeDetails">
+              <MappingFragment StoreEntitySet="TBL-EmployeeDetails">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNum" ColumnName="ContactNum" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="DOA" ColumnName="DOA" />
+                <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="Mode" ColumnName="Mode" />
+                <ScalarProperty Name="OfficeLocationID" ColumnName="OfficeLocationID" />
+                <ScalarProperty Name="TeamLeaderID" ColumnName="TeamLeaderID" />
+                <ScalarProperty Name="ShiftPartnerID" ColumnName="ShiftPartnerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_EmployeeLogin">
+            <EntityTypeMapping TypeName="somya_DRModel.TBL_EmployeeLogin">
+              <MappingFragment StoreEntitySet="TBL-EmployeeLogin">
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LastLoginOn" ColumnName="LastLoginOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Gender">
+            <EntityTypeMapping TypeName="somya_DRModel.TBL_Gender">
+              <MappingFragment StoreEntitySet="TBL-Gender">
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_OfficeLocation">
+            <EntityTypeMapping TypeName="somya_DRModel.TBL_OfficeLocation">
+              <MappingFragment StoreEntitySet="TBL-OfficeLocation">
+                <ScalarProperty Name="OfficeLocationID" ColumnName="OfficeLocationID" />
+                <ScalarProperty Name="OfficeLocation" ColumnName="OfficeLocation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="USP_admin_TLrelation" FunctionName="somya_DRModel.Store.USP_admin_TLrelation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="somya_DRModel.USP_admin_TLrelation_Result">
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="TeamLeaderName" ColumnName="TeamLeaderName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_admin_TotalDRFilled" FunctionName="somya_DRModel.Store.USP_admin_TotalDRFilled">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="somya_DRModel.USP_admin_TotalDRFilled_Result">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TOTAL_DATES_FILLED" ColumnName="TOTAL_DATES_FILLED" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_EXPORT_JOB" FunctionName="somya_DRModel.Store.USP_EXPORT_JOB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="somya_DRModel.USP_EXPORT_JOB_Result">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="JobTime" ColumnName="JobTime" />
+                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

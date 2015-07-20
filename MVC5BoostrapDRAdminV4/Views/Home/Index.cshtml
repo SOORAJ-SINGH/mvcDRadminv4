@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+
+    
+
+    <img style="width:20%;height:23% " src="~/Images/Admin.png" /> <h1>DR Admin Panel</h1>
+    <p class="lead">This Admin Panel is used to manage the Employee Details and export daily reports.</p>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Register Employee</h2>
+        <p>
+            Register new employee details for the DR Account Creation. 
+        </p>
+        <p><a class="btn btn-default" href="/Employee/Create/">Go &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Activate Account</h2>
+        <p>Activate the DR account of the newly registered employee.</p>
+        <p><a class="btn btn-default" href="/AccountDR/Create/">Go &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Export DR reports</h2>
+        <p>View the DR report of the individual employee and export it in the excel format.</p>
+        <p><a class="btn btn-default" href="Export/Index">Go &raquo;</a></p>
+    </div>
+</div>

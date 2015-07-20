@@ -1,0 +1,255 @@
+﻿@model List<USP_EXPORT_JOB_Result>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+
+
+
+<h2>Job Details</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "search-form" }))
+{
+    <div class="navbar-form navbar" id="Searching">
+        <h3>Searching</h3>
+
+        <table id="tblSearchForm" class="table-responsive" align="center">
+            @if (ViewBag.EmpID == null)
+            {
+                <tr>
+                    <td>Employee Name</td>
+
+                    <td>
+                        @Html.DropDownList("empID", (SelectList)ViewBag.EmployeeID, "--Choose Employee Name--", new { @class = "form-control" })
+                        @*<input type="text" id="empID" class="form-control" name="empID" placeholder="Enter Employee ID" />*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>Start Date</td>
+                    <td>
+                        <div class="row">
+                            <div class='col-sm-12'>
+                                    <div class='input-group datePicker' id='datetimepicker1'>
+                                        <input name="startDate" id="startDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>End Date</td>
+                    <td>
+                        <div class="row">
+                            <div class='col-sm-12'>
+                                <div class="">
+                                    <div class='input-group datePicker' id='datetimepicker1'>
+                                        <input name="endDate" id="endDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>Employee ID</td>
+                    <td>
+                        @Html.DropDownList("empID", (SelectList)ViewBag.EmployeeID, "--Choose Employee Name--", new { @class = "form-control" })
+                        @*<input type="text" id="empID" class="form-control" name="empID" value="@ViewBag.EmpID" placeholder="Enter Employee ID" />*@
+                    </td>
+                </tr>
+                <tr>
+                    <td>Start Date</td>
+                    <td>
+                        <div class="row">
+                            <div class='col-sm-12'>
+                                <div class="">
+                                    <div class='input-group datePicker' id='datetimepicker1'>
+                                        <input name="startDate" id="startDate" class="form-control datePicker" value="@ViewBag.StartDate" placeholder="dd/mm/yyyy" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>End Date</td>
+                    <td>
+                        <div class="row">
+                            <div class='col-sm-12'>
+                                <div class="">
+                                    <div class='input-group datePicker' id='datetimepicker1'>
+                                        <input name="endDate" id="endDate" class="form-control datePicker" value="@ViewBag.EndDate" placeholder="dd/mm/yyyy" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </td>
+                </tr>
+            }
+            <tr><td></td></tr>
+            <tr>
+                <td></td>
+
+                <td>
+                    <br />
+                    <button type="submit" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-search"></i> Search
+                    </button>
+                    @*<input class="btn btn-warning" type="submit" value="Search" formaction="/Export/Index" >*@
+
+                    &nbsp;&nbsp;
+                    <button type="submit" class="btn btn-danger" formaction="/Export/Index?isExport=0">
+                        <i class="glyphicon glyphicon-save"></i> Export
+                    </button>
+                    @*<input class="btn btn-danger" type="submit" value="Export" formaction="/Export/Index?isExport=0" />*@
+                </td>
+            </tr>
+
+        </table>
+
+
+
+
+
+    </div>
+    @*<div class='input-group date' id='datetimepicker1'>
+            <input type='text' class="form-control" />
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>*@
+    @*@Html.ActionLink("Export to Excel", "Index", new { isExport = 0})*@
+
+    <br /><br />
+    if (ViewBag.SearchCliked == "Clicked")
+    {
+        if (Model.Count > 1)
+        {
+
+
+            <h3>Job Details for @ViewBag.EmployeeeName</h3>
+
+            <table class="table table-hover table-striped">
+                <tr>
+
+                    <td>
+                        Date
+                    </td>
+                    <td>
+                        Description
+                    </td>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        JobTime (Hrs)
+                    </td>
+                    <td>
+                        Total Time (Hrs)
+                    </td>
+                    <td width="18%">
+                        Remarks
+                    </td>
+
+                </tr>
+
+
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JobTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Remarks)
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+        }
+        else
+        {
+            <h3 style="color:red"> No Data Found!</h3>
+        }
+    }
+    else if (ViewBag.SearchCliked == "Unclicked")
+    {
+
+    }
+
+
+}
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js");
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+@Scripts.Render("~/Scripts/jquery.validateCustom.js");
+<script type="text/javascript">
+    $(document).ready(function () {
+        //alert();
+        $('#search-form').validate(
+        {
+            rules: {
+
+                empID: {
+                    required: true
+                },
+
+                startDate: {
+                    required: true,
+                    date: true
+                },
+                endDate: {
+                    date: true,
+                    required: true
+
+                }
+            },
+            highlight: function (element) {
+                $(element).closest('.control-group').removeClass('success').addClass('error');
+            },
+            success: function (element) {
+                element
+                .text('OK!').addClass('valid')
+                .closest('.control-group').removeClass('error').addClass('success');
+            }
+        });
+    }); // end document.ready
+</script>

@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "Charts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Report in Charts</h2>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+</script>
+<script>
+    function GetData(dateStart, dateEnd) {
+        var url = '/Charts/DrFilledBarChart?startDate=' + dateStart + '&endDate=' + dateEnd;
+        var asd;
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: url,
+
+
+
+            data: '{}',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'FirstName');
+                data.addColumn('number', 'TOTAL_DATES_FILLED');
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].FirstName, chartsdata[i].TOTAL_DATES_FILLED]);
+                }
+
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.visualization.BarChart(document.getElementById('chartdiv'));
+
+                var options = {
+
+                    title: 'DR report For Number of dates filled ',
+                    animation: {
+                        duration: 1500,
+                        easing: 'inAndOut',
+                        startup: true
+                    },
+                    titleTextStyle: {
+                        color: 'orange',
+                        fontSize: 19,
+                        bold: true,
+                        italic: false
+                    },
+                    hAxis: {
+                        title: 'Total Number of Dates DR Filled ---->', titleTextStyle: { color: '#FF0000' }
+                    },
+
+                    //bars: 'horizontal', // Required for Material Bar Charts.
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                }
+
+                chart.draw(data, options);
+
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    }
+
+
+
+</script>
+@*<script src="~/Scripts/MyChart.js"></script>*@
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        //alert('sa');
+        $('#btnSubmit').click(function () {
+            //alert($('#startDate').val());
+            var sDate = $('#startDate').val();
+            var eDate = $('#endDate').val();
+
+            //alert(sDate);
+            if (sDate == '' || eDate == '') {
+                alert('Select Date!');
+            }
+            else
+            {
+                GetData(sDate, eDate);
+            }
+
+
+        });
+       
+           // GetData('2015-04-01', '2015-05-01');
+
+       
+        
+
+    });
+
+   
+
+</script>
+
+
+
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="/Charts/Index">DR Filled</a></li>
+    <li role="presentation"><a href="/Charts/TLChart">Employee's TL </a></li>
+    @*<li role="presentation"><a href="#">Messages</a></li>*@
+</ul>
+
+<br />
+
+
+
+
+
+@using (Html.BeginForm())
+{
+
+    <table id="tblSearchForm" class="table-responsive" align="center">
+        @if (ViewBag.EmpID == null)
+        {
+
+            <tr>
+                <td>Start Date</td>
+                <td>
+                    <div class="row">
+                        <div class='col-sm-12'>
+                            <div class='input-group datePicker' id='datetimepicker1'>
+                                <input name="startDate" id="startDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>End Date</td>
+                <td>
+                    <div class="row">
+                        <div class='col-sm-12'>
+                            <div class="">
+                                <div class='input-group datePicker' id='datetimepicker1'>
+                                    <input name="endDate" id="endDate" class="form-control datePicker" placeholder="dd/mm/yyyy" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        }
+        <tr><td></td></tr>
+        <tr>
+            <td></td>
+
+            <td>
+                <br />
+                <button id="btnSubmit" type="button" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-search"></i> Submit
+                </button>
+            </td>
+        </tr>
+
+    </table>
+
+}
+
+
+
+<div id="chartdiv" style="width: 1000px; height: 1050px;">
+</div>
+
