@@ -9,24 +9,26 @@ namespace MVC5BoostrapDRAdminV4.Models
     {
 
         public int EmpID { get; set; }
-        public System.DateTime startDate { get; set; }
-        public System.DateTime endDate { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
+//        public System.DateTime startDate { get; set; }
+  //      public System.DateTime endDate { get; set; }
 
 
         //somyatrans_drbetaEntitiesJob jobdb = new somyatrans_drbetaEntitiesJob();
         somya_DR_DBcontext empdb = new somya_DR_DBcontext();
 
         //This is called for the Get Action Methodsgets the List of the Job Details of Employee as per Dates selected 
-        public List<USP_EXPORT_JOB_Result> GetJobDetails( string empty)
-        {
-            //DateTime startDate = new DateTime();
-            //DateTime endDate = new DateTime();
-            //startDate = DateTime.Now.AddDays(-5);
+        //public List<USP_EXPORT_JOB_Result> GetJobDetails( string empty)
+        //{
+        //    //DateTime startDate = new DateTime();
+        //    //DateTime endDate = new DateTime();
+        //    //startDate = DateTime.Now.AddDays(-5);
 
-            return empdb.USP_EXPORT_JOB("GETJOBData", 0, DateTime.Now.AddDays(-5), DateTime.Now.AddDays(-1)).ToList();
+        //    return empdb.USP_EXPORT_JOB("GETJOBData", 0, DateTime.Now.AddDays(-5).ToString(), DateTime.Now.AddDays(-1).ToString()).ToList();
 
             
-        }
+        //}
 
         public List<USP_EXPORT_JOB_Result> GetJobDetails()
         {
@@ -35,7 +37,7 @@ namespace MVC5BoostrapDRAdminV4.Models
             //startDate = DateTime.Now.AddDays(-5);
 
             //return jobdb.USP_EXPORT_JOB("GETJOBData", 117, DateTime.Now.AddDays(-5), DateTime.Now.AddDays(-1)).ToList();
-            return empdb.USP_EXPORT_JOB("GETJOBData", EmpID, startDate, endDate).ToList();
+            return empdb.USP_EXPORT_JOB("GETJOBData", EmpID, startDate.ToString(), endDate.ToString()).ToList();
 
         }
           
@@ -50,7 +52,7 @@ namespace MVC5BoostrapDRAdminV4.Models
 
 
         //gets the jobs details for range of date of every Employee  
-        public List<USP_admin_TotalDRFilled_Result> GetDRFilledDetails(DateTime startDate,DateTime endDate)
+        public List<USP_admin_TotalDRFilled_Result> GetDRFilledDetails(string startDate,string endDate)
         {
             return empdb.USP_admin_TotalDRFilled(startDate, endDate).ToList();
         }

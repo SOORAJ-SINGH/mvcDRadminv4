@@ -24,7 +24,7 @@ namespace MVC5BoostrapDRAdminV4.Controllers
 
             DateTime sd = Convert.ToDateTime(startDate);
 
-            var jobData = job.GetDRFilledDetails(Convert.ToDateTime(startDate), Convert.ToDateTime(endDate));
+            var jobData = job.GetDRFilledDetails(startDate, endDate);
             return Json(jobData, JsonRequestBehavior.AllowGet);
         }
 

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="somya_DRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="somya_DRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TBL-Department">
           <Key>
             <PropertyRef Name="DepatmentID" />
@@ -110,14 +110,14 @@
         </Association>
         <Function Name="USP_admin_TLrelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="USP-admin-TLrelation" />
         <Function Name="USP_admin_TotalDRFilled" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="USP-admin-TotalDRFilled">
-          <Parameter Name="StartDate" Type="date" Mode="In" />
-          <Parameter Name="EndDate" Type="date" Mode="In" />
+          <Parameter Name="StartDate" Type="varchar" Mode="In" />
+          <Parameter Name="EndDate" Type="varchar" Mode="In" />
         </Function>
         <Function Name="USP_EXPORT_JOB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="USP-EXPORT-JOB">
           <Parameter Name="CallType" Type="varchar" Mode="In" />
           <Parameter Name="EmpID" Type="int" Mode="In" />
-          <Parameter Name="StartDate" Type="datetime" Mode="In" />
-          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="StartDate" Type="varchar" Mode="In" />
+          <Parameter Name="EndDate" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="somya_DRModelStoreContainer">
           <EntitySet Name="TBL-Department" EntityType="Self.TBL-Department" Schema="dbo" store:Type="Tables" />
@@ -142,8 +142,7 @@
             <End Role="TBL-EmployeeLogin" EntitySet="TBL-EmployeeLogin" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="somya_DRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -282,14 +281,14 @@
           </AssociationSet>
           <FunctionImport Name="USP_admin_TLrelation" ReturnType="Collection(somya_DRModel.USP_admin_TLrelation_Result)" />
           <FunctionImport Name="USP_admin_TotalDRFilled" ReturnType="Collection(somya_DRModel.USP_admin_TotalDRFilled_Result)">
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="StartDate" Mode="In" Type="String" />
+            <Parameter Name="EndDate" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="USP_EXPORT_JOB" ReturnType="Collection(somya_DRModel.USP_EXPORT_JOB_Result)">
             <Parameter Name="CallType" Mode="In" Type="String" />
             <Parameter Name="EmpID" Mode="In" Type="Int32" />
-            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
-            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="StartDate" Mode="In" Type="String" />
+            <Parameter Name="EndDate" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="USP_admin_TLrelation_Result">

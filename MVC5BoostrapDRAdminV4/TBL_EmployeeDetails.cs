@@ -18,9 +18,9 @@ namespace MVC5BoostrapDRAdminV4
         {
             this.TBL_EmployeeLogin = new HashSet<TBL_EmployeeLogin>();
         }
-    /*
-        public int EmpID { get; set; }
-        public string FirstName { get; set; }
+    
+        //public override int EmpID { get; set; }
+    /*    public string FirstName { get; set; }
         public string LastName { get; set; }
         public int GenderID { get; set; }
         public string Designation { get; set; }
@@ -42,6 +42,6 @@ namespace MVC5BoostrapDRAdminV4
         public virtual TBL_Gender TBL_Gender { get; set; }
         public virtual TBL_OfficeLocation TBL_OfficeLocation { get; set; }
         public virtual ICollection<TBL_EmployeeLogin> TBL_EmployeeLogin { get; set; }
-     */ 
+     * */
     }
 }

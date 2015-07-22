@@ -38,6 +38,10 @@ namespace MVC5BoostrapDRAdminV4
 
         [DisplayName("Last Name")]
         public string LastName { get; set; }
+
+        [DisplayName("Full Name")]
+        public string FullName { get { return FirstName +" "+ LastName; }  }
+
         [Required]
         public string Designation { get; set; }
         [DisplayName("Department")]

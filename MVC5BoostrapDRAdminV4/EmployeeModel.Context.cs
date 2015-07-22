@@ -38,20 +38,20 @@ namespace MVC5BoostrapDRAdminV4
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_admin_TLrelation_Result>("USP_admin_TLrelation");
         }
     
-        public virtual ObjectResult<USP_admin_TotalDRFilled_Result> USP_admin_TotalDRFilled(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<USP_admin_TotalDRFilled_Result> USP_admin_TotalDRFilled(string startDate, string endDate)
         {
-            var startDateParameter = startDate.HasValue ?
+            var startDateParameter = startDate != null ?
                 new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
+                new ObjectParameter("StartDate", typeof(string));
     
-            var endDateParameter = endDate.HasValue ?
+            var endDateParameter = endDate != null ?
                 new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
+                new ObjectParameter("EndDate", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_admin_TotalDRFilled_Result>("USP_admin_TotalDRFilled", startDateParameter, endDateParameter);
         }
     
-        public virtual ObjectResult<USP_EXPORT_JOB_Result> USP_EXPORT_JOB(string callType, Nullable<int> empID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual ObjectResult<USP_EXPORT_JOB_Result> USP_EXPORT_JOB(string callType, Nullable<int> empID, string startDate, string endDate)
         {
             var callTypeParameter = callType != null ?
                 new ObjectParameter("CallType", callType) :
@@ -61,13 +61,13 @@ namespace MVC5BoostrapDRAdminV4
                 new ObjectParameter("EmpID", empID) :
                 new ObjectParameter("EmpID", typeof(int));
     
-            var startDateParameter = startDate.HasValue ?
+            var startDateParameter = startDate != null ?
                 new ObjectParameter("StartDate", startDate) :
-                new ObjectParameter("StartDate", typeof(System.DateTime));
+                new ObjectParameter("StartDate", typeof(string));
     
-            var endDateParameter = endDate.HasValue ?
+            var endDateParameter = endDate != null ?
                 new ObjectParameter("EndDate", endDate) :
-                new ObjectParameter("EndDate", typeof(System.DateTime));
+                new ObjectParameter("EndDate", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_EXPORT_JOB_Result>("USP_EXPORT_JOB", callTypeParameter, empIDParameter, startDateParameter, endDateParameter);
         }

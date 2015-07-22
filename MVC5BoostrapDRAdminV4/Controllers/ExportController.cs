@@ -9,6 +9,7 @@ using System.IO;
 using System.Web.UI;
 using System.Data;
 using System.Reflection;
+using System.Globalization;
 
 
 namespace MVC5BoostrapDRAdminV4.Controllers
@@ -22,84 +23,94 @@ namespace MVC5BoostrapDRAdminV4.Controllers
         // GET: /Export/
         public ActionResult Index(int? empID, string startDate, string endDate, int? isExport)
         {
-
-            var tbl_employeedetails = db.TBL_EmployeeDetails;
-            //initialze view bag
-            ViewBag.EmpID = empID;
-            ViewBag.StartDate = startDate;
-            ViewBag.EndDate = endDate;
-
-            //to create the DropDownlist of the Employee Name on the Export page
-            ViewBag.EmployeeID = new SelectList(db.TBL_EmployeeDetails, "empID", "FirstName");
-
-
-            //0 means true
-            //If Export Button is Clicked.
-            #region "If Export Button is Clicked"
-
-
-            if (isExport == 0)
+            try
             {
+                 
+                var tbl_employeedetails = db.TBL_EmployeeDetails;
+                //initialze view bag
+                ViewBag.EmpID = empID;
+                ViewBag.StartDate = startDate;
+                ViewBag.EndDate = endDate;
 
-                JobsModel jm = new JobsModel();
-                jm.EmpID = Convert.ToInt32(empID);
-                jm.startDate = Convert.ToDateTime(startDate);
-                jm.endDate = Convert.ToDateTime(endDate);
+                //to create the DropDownlist of the Employee Name on the Export page
+                ViewBag.EmployeeID = new SelectList(db.TBL_EmployeeDetails, "empID", "FullName");
 
-                //ViewBag.EmployeeeName = jm.GetName();
 
-                //return View(jm.GetJobDetails());
+                //0 means true
+                //If Export Button is Clicked.
+                #region "If Export Button is Clicked"
 
-                GridView gv = new GridView();
-                DataTable dtTemp = new DataTable();
-                dtTemp = ToDataTable(jm.GetJobDetails());
-                dtTemp.Columns.Remove("JobID");
 
-                gv.DataSource = dtTemp;
-                gv.DataBind();
-
-                Response.ClearContent();
-                Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=DrExport.xls");
-                Response.ContentType = "application/ms-excel";
-                Response.Charset = "";
-                StringWriter sw = new StringWriter();
-                HtmlTextWriter htw = new HtmlTextWriter(sw);
-                gv.RenderControl(htw);
-                Response.Output.Write(sw.ToString());
-                Response.Flush();
-                Response.End();
-                Response.Redirect("/Export", true);
-                return View();
-            }
-            #endregion
-            else
-            {
-                //If page is requested First Time then empid is null
-                if (empID == null)
+                if (isExport == 0)
                 {
-                    ViewBag.SearchCliked = "Unclicked";
-                    JobsModel jm = new JobsModel();
-
-                    return View(jm.GetJobDetails("empty"));
-                }
-                //if Search button is clicked
-                else
-                {
-                    ViewBag.SearchCliked = "Clicked";
-
+                    #region Export Process
                     JobsModel jm = new JobsModel();
                     jm.EmpID = Convert.ToInt32(empID);
-                    jm.startDate = Convert.ToDateTime(startDate);
-                    jm.endDate = Convert.ToDateTime(endDate);
+                    jm.startDate = startDate;
+                    jm.endDate = endDate;
 
-                    //ViewBag.EmployeeId = jm.EmpID;
-                    ViewBag.EmployeeeName = tbl_employeedetails.Find(empID).FirstName;
+                    //ViewBag.EmployeeeName = jm.GetName();
 
-                    return View("Index", jm.GetJobDetails());
+                    //return View(jm.GetJobDetails());
 
+                    GridView gv = new GridView();
+                    DataTable dtTemp = new DataTable();
+                    dtTemp = ToDataTable(jm.GetJobDetails());
+                    //dtTemp.Columns.Remove("JobID");
+
+                    gv.DataSource = dtTemp;
+                    gv.DataBind();
+
+                    Response.ClearContent();
+                    Response.Buffer = true;
+                    Response.AddHeader("content-disposition", "attachment; filename=DrExport.xls");
+                    Response.ContentType = "application/ms-excel";
+                    Response.Charset = "";
+                    StringWriter sw = new StringWriter();
+                    HtmlTextWriter htw = new HtmlTextWriter(sw);
+                    gv.RenderControl(htw);
+                    Response.Output.Write(sw.ToString());
+                    Response.Flush();
+                    Response.End();
+                    Response.Redirect("/Export", true);
+                    return View();
+                    #endregion Export Process
+                }
+                #endregion
+                else
+                {
+                    //If page is requested First Time then empid is null
+                    if (empID == null)
+                    {
+                        ViewBag.SearchCliked = "Unclicked";
+                        JobsModel jm = new JobsModel();
+                        //jm.GetJobDetails("empty")
+                        return View();
+                    }
+                    //if Search button is clicked
+                    else
+                    {
+                        ViewBag.SearchCliked = "Clicked";
+
+                        JobsModel jm = new JobsModel();
+                        jm.EmpID = Convert.ToInt32(empID);
+                        
+                        jm.startDate = startDate;
+                        jm.endDate = endDate;
+
+                        //ViewBag.EmployeeId = jm.EmpID;
+                        ViewBag.EmployeeeName = tbl_employeedetails.Find(empID).FirstName;
+
+                        return View("Index", jm.GetJobDetails());
+
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
 
@@ -109,8 +120,8 @@ namespace MVC5BoostrapDRAdminV4.Controllers
         {
             JobsModel jm = new JobsModel();
             jm.EmpID = Convert.ToInt32(empID);
-            jm.startDate = Convert.ToDateTime(startDate);
-            jm.endDate = Convert.ToDateTime(endDate);
+            jm.startDate = startDate;
+            jm.endDate = endDate;
 
             //ViewBag.EmployeeeName = jm.GetName();
 
